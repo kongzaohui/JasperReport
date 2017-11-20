@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport_stockholding" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="2" bottomMargin="5" whenResourceMissingType="Empty" uuid="537674a2-925b-4945-970c-5a0fd453b2f4">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="786"/>
+	<property name="ireport.y" value="0"/>
+	<field name="exchange_code" class="java.lang.String"/>
+	<field name="product_code" class="java.lang.String"/>
+	<field name="account_no_holding" class="java.lang.String"/>
+	<field name="product_ccy" class="java.lang.String"/>
+	<field name="product_name" class="java.lang.String"/>
+	<field name="avail_qty" class="java.math.BigDecimal"/>
+	<field name="ledger_qty" class="java.math.BigDecimal"/>
+	<field name="undue_qty" class="java.math.BigDecimal"/>
+	<field name="on_hold_qty" class="java.math.BigDecimal"/>
+	<field name="invest_class_suspended" class="java.lang.String"/>
+	<field name="avg_cost" class="java.lang.String"/>
+	<field name="market_price" class="java.lang.String"/>
+	<field name="ledger_market_val" class="java.math.BigDecimal"/>
+	<field name="unrealized_pl" class="java.math.BigDecimal"/>
+	<field name="fx_rate" class="java.math.BigDecimal"/>
+	<variable name="ledger_market_val_subtotal" class="java.math.BigDecimal" resetType="Group" resetGroup="Sub_Total" calculation="Sum">
+		<variableExpression><![CDATA[$F{ledger_market_val}.multiply( $F{fx_rate})]]></variableExpression>
+	</variable>
+	<variable name="unrealized_pl_subtotal" class="java.math.BigDecimal" resetType="Group" resetGroup="Sub_Total" calculation="Sum">
+		<variableExpression><![CDATA[$F{unrealized_pl}.multiply( $F{fx_rate})]]></variableExpression>
+	</variable>
+	<variable name="ledger_market_val_total" class="java.math.BigDecimal" resetType="Group" resetGroup="Total" calculation="Sum">
+		<variableExpression><![CDATA[$F{ledger_market_val}.multiply( $F{fx_rate})]]></variableExpression>
+	</variable>
+	<variable name="unrealized_pl_total" class="java.math.BigDecimal" resetType="Group" resetGroup="Total" calculation="Sum">
+		<variableExpression><![CDATA[$F{unrealized_pl}.multiply( $F{fx_rate})]]></variableExpression>
+	</variable>
+	<group name="Total">
+		<groupExpression><![CDATA[$F{account_no_holding}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<staticText>
+					<reportElement x="430" y="1" width="85" height="10" uuid="dbd7e233-b25a-404f-8449-41f54b190feb"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Total (HKD equivalent):]]></text>
+				</staticText>
+				<textField pattern="###,###,###,###.00;(###,###,###,###.00)" isBlankWhenNull="true">
+					<reportElement x="520" y="1" width="65" height="10" uuid="e2c7614a-175f-44f3-8f29-1237238acbd6"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ledger_market_val_total}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="515" y="1" width="125" height="1" uuid="9f38eb0d-19e7-4479-a214-4921ca13101e"/>
+				</line>
+				<line>
+					<reportElement x="515" y="11" width="125" height="1" uuid="8f674066-4bfc-4314-baa6-412e9112105a"/>
+				</line>
+				<line>
+					<reportElement x="515" y="13" width="125" height="1" uuid="4f3232d5-6684-489a-be44-b31f1e97bac5"/>
+				</line>
+				<textField pattern="###,###,###,###.00;(###,###,###,###.00)" isBlankWhenNull="true">
+					<reportElement x="590" y="1" width="50" height="10" uuid="10a50f65-becc-4da7-83c1-10de3b2dde31"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{unrealized_pl_total}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Sub_Total">
+		<groupExpression><![CDATA[$F{exchange_code}]]></groupExpression>
+		<groupFooter>
+			<band height="11">
+				<textField pattern="###,###,###,###.00;(###,###,###,###.00)" isBlankWhenNull="true">
+					<reportElement x="520" y="1" width="65" height="10" uuid="b3f2512d-f225-4386-be2b-9f73464a5479"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ledger_market_val_subtotal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="430" y="1" width="85" height="10" uuid="81f1e6dc-b009-418f-aed7-8bc24cec39c6"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Sub_Total (HKD equivalent):]]></text>
+				</staticText>
+				<textField pattern="###,###,###,###.00;(###,###,###,###.00)" isBlankWhenNull="true">
+					<reportElement x="590" y="1" width="50" height="10" uuid="3f1c12f7-766d-466a-8173-b78f455d9d8c"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{unrealized_pl_subtotal}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="400" y="1" width="30" height="10" uuid="d2f21d61-d593-44f8-94ef-fda721fa4a78"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{exchange_code}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="515" y="0" width="125" height="1" uuid="e33b9116-6c7d-4fe6-8ae8-93ef6d762660"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="10" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="10" uuid="2e397083-a2f2-4e13-8d81-b35a0c3daadb"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock Holding:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="10" width="30" height="10" uuid="4009e159-74a6-44e3-bd82-7aa0b575049b"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Exchange]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="10" width="73" height="10" uuid="0437879b-e9a3-419d-a4c1-a6f6cc57c627"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="10" width="30" height="10" uuid="f7319130-e738-4009-aba1-6b08e6426f49"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Product]]></text>
+			</staticText>
+			<line>
+				<reportElement x="25" y="20" width="615" height="1" uuid="a9333a22-66b0-4fb0-bcea-cf2e0381c1f0"/>
+			</line>
+			<textField>
+				<reportElement x="220" y="10" width="50" height="10" uuid="ade59862-92dd-4fd8-9a49-a746e49dc51f"/>
+				<textElement textAlignment="Right">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Available Qty"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="355" y="10" width="50" height="10" uuid="7f121724-3dbc-46fc-bd3d-6b4ef02ba9b1"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Ledger Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="10" width="15" height="10" uuid="6b9aadf9-42aa-454d-a4b6-dacba3d0a167"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Ccy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="10" width="35" height="10" uuid="e6eb93a0-67ea-47d1-9ed7-0d19a00f3b90"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Undue Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="10" width="40" height="10" uuid="9644b89e-b5a7-4ac4-b904-2614be272571"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[On Hold Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="2" width="40" height="18" uuid="e72f1717-ad64-44d6-9c3e-ec3a347a7912"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Invest Class Suspended]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="10" width="40" height="10" uuid="c5addc43-8993-4b3d-87da-96fbb44f1591"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Average Cost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="10" width="40" height="10" uuid="ba161d06-c4c1-4bac-8618-c1de0dd652fc"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Market Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="520" y="10" width="65" height="10" uuid="6e2cfcd1-4a65-4590-8858-e00017e91719"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Ledger Market Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="590" y="10" width="50" height="10" uuid="f5acd55d-a3c6-4470-babb-5e4ed1cc5123"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[UInrealized P/L]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="25" y="0" width="30" height="10" uuid="a0fbfaf5-813b-4de8-9b5e-8d12c62b1c1d"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{exchange_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="95" y="0" width="73" height="10" uuid="73e58187-4f89-4935-9313-13caff718fa0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="0" width="30" height="10" uuid="6b902d40-6a92-486d-b6a1-837d65c68a68"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="220" y="0" width="50" height="10" uuid="0e6be045-c291-4b9b-8376-681d2355bed3"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("###,###,###,###").format($F{avail_qty})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="355" y="0" width="50" height="10" uuid="41e5037a-b442-4eb4-84df-811c7c05d675"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("###,###,###,###").format($F{ledger_qty})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="410" y="0" width="15" height="10" uuid="f14d87d0-b2ff-4072-986a-051822ea4996"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_ccy}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="170" y="0" width="42" height="10" uuid="6432708a-c411-4586-aa8d-06233c3c9698"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invest_class_suspended}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="275" y="0" width="35" height="10" uuid="7be02847-a6ae-4ed4-a608-4e2b96c2fe4b"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("###,###,###,###").format($F{undue_qty})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="310" y="0" width="40" height="10" uuid="4f9ab3cc-a1c8-436b-80a2-7198828128d1"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("###,###,###,###").format($F{on_hold_qty})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="430" y="0" width="40" height="10" uuid="5ed38431-25b3-4192-a25c-133de15462fe"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{avg_cost}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="475" y="0" width="40" height="10" uuid="cb335880-2937-4715-9d53-331a84317a0c"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{market_price}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###,###,##0.00;(-###,###,##0.00)" isBlankWhenNull="true">
+				<reportElement x="520" y="0" width="65" height="10" uuid="d9825260-29fd-4df3-8b37-c6adf2487402"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledger_market_val}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+				<reportElement x="590" y="0" width="50" height="10" uuid="fd1403dd-cfd1-4089-92f1-d2dfd82f3a37"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unrealized_pl}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="2"/>
+	</summary>
+</jasperReport>

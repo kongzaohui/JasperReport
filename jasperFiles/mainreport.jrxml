@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mainreport" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="2" whenResourceMissingType="Empty" uuid="537674a2-925b-4945-970c-5a0fd453b2f4">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.jasperserver.reportUnit" value="/Organization/Test/ClientPositionReport"/>
+	<property name="ireport.jasperserver.url" value="http://localhost:8088/jasperserver/services/repository"/>
+	<style name="zh_CN" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\zanderkong\\Downloads\\jasperreports-5.6.0\\ClientPositionReport\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="account_no" class="java.lang.String"/>
+	<field name="account_name" class="java.lang.String"/>
+	<field name="ae_code" class="java.lang.String"/>
+	<field name="ae_name" class="java.lang.String"/>
+	<field name="company_name" class="java.lang.String"/>
+	<field name="ae_team_id" class="java.lang.String"/>
+	<field name="ae_team_name" class="java.lang.String"/>
+	<field name="account_type_basic" class="java.lang.String"/>
+	<field name="bank_acct_no" class="java.lang.String"/>
+	<field name="bank_acct_name" class="java.lang.String"/>
+	<field name="invest_suit_en" class="java.lang.String"/>
+	<field name="invest_suit_tc" class="java.lang.String"/>
+	<field name="invest_suit_remark" class="java.lang.String"/>
+	<field name="account_tel1" class="java.lang.String"/>
+	<field name="account_tel2" class="java.lang.String"/>
+	<field name="account_mobile" class="java.lang.String"/>
+	<field name="trade_limit" class="java.math.BigDecimal"/>
+	<field name="trade_ccy" class="java.lang.String"/>
+	<field name="credit_limit" class="java.math.BigDecimal"/>
+	<field name="credit_ccy" class="java.lang.String"/>
+	<field name="exposure_limit" class="java.math.BigDecimal"/>
+	<field name="exposure_ccy" class="java.lang.String"/>
+	<field name="cashBalanceBeanList" class="java.util.List"/>
+	<field name="stockHoldingBeanList" class="java.util.List"/>
+	<group name="ae_code" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{ae_code}]]></groupExpression>
+		<groupHeader>
+			<band height="5"/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="account_no">
+		<groupExpression><![CDATA[$F{account_no}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement x="135" y="20" width="152" height="10" uuid="733051d2-d231-4bc3-b5b3-8b8c5cc63d1a"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bank_acct_name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="749" y="20" width="55" height="10" uuid="7475a19e-0c58-427d-891a-0d71c8e71fc7"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new DecimalFormat("###,###,##0.00").format($F{trade_limit}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="115" y="0" width="47" height="10" uuid="2e6b56e6-0503-4eec-b90b-e5aac0a0a974"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Account Name:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="749" y="10" width="55" height="10" uuid="2b0c6df3-7785-4631-9be8-b0cc814b600d"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new DecimalFormat("###,###,##0.00").format($F{credit_limit}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="435" y="0" width="50" height="10" uuid="a004e38a-5b01-439a-87b6-1ad74a06beec"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{account_tel1}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="zh_CN" x="340" y="10" width="60" height="10" uuid="04f414c7-293f-4a2b-b9d4-341c33aa3498"/>
+					<textElement>
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{invest_suit_tc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="160" y="0" width="110" height="10" uuid="13e3e3c8-e2b6-41bb-9f2e-0f9ed589c429"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{account_name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="690" y="20" width="55" height="10" uuid="0da4ca8f-c50f-4b0d-8316-ef97843c31e6"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{trade_ccy}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="45" y="0" width="65" height="10" uuid="805f48f8-46c6-4dd4-9751-c014ebbb09ad"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{account_no}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="340" y="0" width="60" height="10" uuid="e761ed51-8e87-46ad-b82b-184070431e2e"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{invest_suit_en}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="435" y="20" width="55" height="10" uuid="2811e0f9-2151-400e-8b7e-9714a2b3e9ab"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{account_mobile}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="540" y="0" width="55" height="10" uuid="9778b6ac-a73f-40af-a4dd-379a1347b8e3"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ae_code}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="45" height="10" uuid="460df4e0-122c-42b9-8118-14937253d253"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Bank Accounts:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="45" y="10" width="73" height="10" uuid="7a465645-ad30-4837-b5f2-aec94061e58e"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{account_type_basic}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="640" y="10" width="45" height="10" uuid="26399af5-01f2-4c4b-8048-889bd1ebf50f"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Credit Limit:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="270" y="0" width="67" height="10" uuid="c363b8f5-53a5-4214-9932-2b4e70f2ba4e"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Invest Suitability Class:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="40" height="10" uuid="a1b7ba70-c64a-405d-b5cd-9f92b209a53e"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Account No:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="640" y="0" width="45" height="10" uuid="46c55c2f-a01c-471f-b4c9-6314da54d076"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Exposure Limit:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="340" y="20" width="70" height="10" uuid="ec8f16d3-201b-48be-855b-b6f9c7630034"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{invest_suit_remark}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="690" y="10" width="55" height="10" uuid="cc312589-a733-4004-8ac6-73fff015fcf7"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{credit_ccy}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="640" y="20" width="45" height="10" uuid="9ce5bd94-8934-4af6-9a19-d190ff3893e0"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Trading Limit:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="10" width="45" height="10" uuid="fd7e9b1d-4284-4df8-a8a6-726475bc59d1"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Account Type:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="45" y="20" width="90" height="10" uuid="25bf0659-7f1c-4844-bacf-a98482d81ce3"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bank_acct_no}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="510" y="0" width="29" height="10" uuid="53493695-07fb-49c5-ab95-3fc318370b44"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[AE Code:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="690" y="0" width="55" height="10" uuid="15c27ad0-0fb8-4282-9e9e-7123355e30c1"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{exposure_ccy}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="749" y="0" width="55" height="10" uuid="ee06ff51-14d0-47ed-ab3c-29b726eec4d4"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new DecimalFormat("###,###,##0.00").format($F{exposure_limit}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="435" y="10" width="50" height="10" uuid="df339373-a4a0-417f-9d8f-876ecd849660"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{account_tel2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="420" y="0" width="15" height="10" uuid="0eb0002a-d879-44c3-ad24-4c386a83e204"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Tel.:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="20" width="822" height="14" isRemoveLineWhenBlank="true" uuid="f3a6106e-bb15-49f3-bd4c-7ff6b114d81e"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Client Position Report"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="200" height="14" isRemoveLineWhenBlank="true" uuid="15ffb3ec-31ea-4b4d-b3c1-cf1b3f15edd4"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SINOPAC SECURITIES (ASIA) LIMITED"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="30" width="45" height="10" uuid="28d9fa94-b8f8-465f-8ec6-1de424714ea2"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["System Date:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="45" y="30" width="92" height="10" uuid="a1534150-96d8-4d6f-93b6-c5d323811e8e"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="42" width="822" height="1" uuid="5dea5fe2-653b-469d-9178-90231970916e"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="85" y="43" width="150" height="10" uuid="ea7b819b-8353-4222-9230-792c48afc79d"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ae_team_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="43" width="25" height="10" uuid="28ff5ad9-22fe-4c00-90b6-dce2fb37217c"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Team:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="35" y="43" width="50" height="10" uuid="6cd6bd08-c9a4-46e2-9552-c6afeff39936"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ae_team_id}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="35" y="55" width="50" height="10" uuid="ee511add-1ada-4382-98c3-6bda32e152ae"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ae_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="55" width="35" height="10" uuid="93fc682b-1b79-4f4a-ab54-41ed53da0c83"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AE Code:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="705" y="30" width="40" height="10" uuid="4627c0af-09cf-48d3-816f-7be7d3d9c7f8"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="750" y="30" width="40" height="10" uuid="21af5e71-56b1-49f1-899d-ec43795eb095"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="67" width="822" height="1" uuid="08d63a5a-7ba3-4729-81a5-a5522d36b1fd"/>
+			</line>
+			<textField>
+				<reportElement x="705" y="20" width="40" height="10" uuid="55a0b289-944e-4b23-814c-c203c863f614"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Print Date:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd HH:mm:ss">
+				<reportElement x="750" y="20" width="64" height="10" uuid="91e4460c-ecf9-40a0-be07-1e18952b9c0e"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="705" y="10" width="40" height="10" uuid="e6c79804-15ed-4e92-b109-a75ef61cafab"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Printed By:  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="750" y="10" width="64" height="10" uuid="93e7162a-1d2f-4364-8585-180cbb37fde0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Admin  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="705" y="0" width="40" height="10" uuid="56f50044-a50b-4535-a03e-83f13500bc0d"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Report ID:  "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="750" y="0" width="64" height="10" uuid="13c4faf0-8b79-48f8-a291-3dd0c0b252af"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["D0400"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="85" y="55" width="150" height="10" uuid="0dcd6c87-a5d5-4a51-8749-0fd25c26f6cd"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ae_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="5"/>
+	</columnHeader>
+	<detail>
+		<band height="2" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="842" height="1" uuid="6f761b7d-9f63-4b62-b98e-a3970045aca5"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource ($F{cashBalanceBeanList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["subreport_cashbalance.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="1" width="842" height="1" uuid="3f4982ee-5258-4943-a2e2-a28d1a5dc1a9"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource ($F{stockHoldingBeanList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["subreport_stockholding.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

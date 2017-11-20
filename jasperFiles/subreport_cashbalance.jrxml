@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport_cashbalance" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="2" bottomMargin="10" whenResourceMissingType="Empty" uuid="537674a2-925b-4945-970c-5a0fd453b2f4">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+	<field name="account_no_cash" class="java.lang.String"/>
+	<field name="ccy" class="java.lang.String"/>
+	<field name="avail_bal" class="java.math.BigDecimal"/>
+	<field name="t1_ledger_bal" class="java.math.BigDecimal"/>
+	<field name="tn_ledger_bal" class="java.math.BigDecimal"/>
+	<field name="accrued_debit_interest" class="java.math.BigDecimal">
+		<property name="initial value expression" value="$F{total_paid}.valueOf(0.00)"/>
+	</field>
+	<field name="pending_withdrawal" class="java.math.BigDecimal"/>
+	<field name="accrued_credit_interest" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="10" uuid="2e397083-a2f2-4e13-8d81-b35a0c3daadb"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cash Balance:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="25" y="10" width="20" height="10" uuid="ade59862-92dd-4fd8-9a49-a746e49dc51f"/>
+				<textElement>
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ccy"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="10" width="50" height="10" uuid="c34a6fd3-966c-46f5-b283-516e96e5c58e"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[T+1 Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="10" width="60" height="10" uuid="5ffb44a7-646b-43ac-8930-e30291843645"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Ledger Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="10" width="55" height="10" uuid="cad78851-2460-477c-b75f-22f990eb5650"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Available Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="10" width="70" height="10" uuid="a3d19efa-3289-47f5-8dde-5d5a0305cb79"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Accrued Debit Interest]]></text>
+			</staticText>
+			<line>
+				<reportElement x="25" y="21" width="485" height="1" uuid="a5c77329-6688-4c1a-bbcc-c2724a2357d9"/>
+			</line>
+			<staticText>
+				<reportElement x="130" y="10" width="60" height="10" uuid="e4d9caec-5af4-411f-8b3a-4b5c1ac38f04"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Pending Withdarwal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="10" width="70" height="10" uuid="91e247d1-689c-463b-a259-bc2b38d2e7d6"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Accrued Credit Interest]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="25" y="0" width="20" height="10" uuid="1abdcc6d-89b5-4384-8e59-d183f9ef18cd"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ccy}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="50" height="10" uuid="f1c5950e-669a-4d29-a154-e025c1ba2ded"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t1_ledger_bal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="false">
+				<reportElement x="270" y="0" width="60" height="10" uuid="ad234f73-28b4-426a-9551-3af3e98fbdfb"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tn_ledger_bal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="55" y="0" width="55" height="10" uuid="55f3c67a-3476-4780-8e78-79ed0379612d"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{avail_bal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="350" y="0" width="70" height="10" uuid="934f3be4-799c-4472-b4f1-40e27ef29184"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{accrued_debit_interest}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="130" y="0" width="60" height="10" uuid="cd9d0609-3bba-4fdf-b68a-73cdfe44288e"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pending_withdrawal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="440" y="0" width="70" height="10" uuid="93ae6856-b947-4725-beea-24b9ab7315b8"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{accrued_credit_interest}==null?"0.00" : $F{accrued_credit_interest}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="1" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>

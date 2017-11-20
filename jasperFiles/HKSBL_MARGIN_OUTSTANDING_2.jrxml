@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HKSBL_MARGIN_OUTSTANDING_2" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="2" bottomMargin="10" isFloatColumnFooter="true" whenResourceMissingType="Empty" uuid="537674a2-925b-4945-970c-5a0fd453b2f4">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="189"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+	<queryString>
+		<![CDATA[SELECT sbl.exchange_code                             AS exchangeCode,
+       sbl.product_code                              AS productCode,
+       p.product_name                                AS productName,
+       Cast(Round(h.t_qty, 0) AS DECIMAL(18, 0))     AS t_Qty,
+       Cast(Round(h.t1_qty, 0) AS DECIMAL(18, 0))    AS t1_Qty,
+       Cast(Round(h.t2_qty, 0) AS DECIMAL(18, 0))    AS t2_Qty,
+       Cast(Round(Sum(os_qty), 0) AS DECIMAL(18, 0)) AS qtyLent
+FROM   iboss_sub.dbo.view_sbl_all_trans sbl WITH (nolock),
+       (SELECT vbah.exchange_code,
+               vbah.product_code,
+               Sum(vbah.t_qty)  AS t_qty,
+               Sum(vbah.t1_qty) AS t1_qty,
+               Sum(vbah.t2_qty) AS t2_qty
+        FROM   mst_main_account ma WITH (nolock)
+               INNER JOIN mst_account a WITH (nolock)
+                       ON ma.chk_status = 'A'
+                          AND ma.main_account_type = 'M'
+                          AND a.chk_status = 'A'
+                          AND a.main_account_no = ma.main_account_no
+               INNER JOIN view_bal_account_holding vbah WITH (nolock)
+                       ON vbah.exchange_code = 'SEHK'
+                          AND vbah.account_no = a.account_no
+        GROUP  BY vbah.exchange_code,
+                  vbah.product_code) AS h,
+       iboss2.dbo.mst_product p WITH (nolock)
+WHERE  sbl.counterparty = 'HOUSE'
+       AND sbl.os_qty > 0
+       AND sbl.chk_status <> 'D'
+       AND h.exchange_code = sbl.exchange_code
+       AND h.product_code = sbl.product_code
+       AND p.exchange_code = sbl.exchange_code
+       AND p.product_code = sbl.product_code
+       AND p.chk_status = 'A'
+       AND 1 = 1
+GROUP  BY sbl.exchange_code,
+          sbl.product_code,
+          p.product_name,
+          h.t_qty,
+          h.t1_qty,
+          h.t2_qty
+ORDER  BY sbl.product_code]]>
+	</queryString>
+	<field name="productCode" class="java.lang.String"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="exchangeCode" class="java.lang.String"/>
+	<field name="qtyLent" class="java.math.BigDecimal"/>
+	<field name="t_Qty" class="java.math.BigDecimal">
+		<property name="initial value expression" value="$F{total_paid}.valueOf(0.00)"/>
+	</field>
+	<field name="t1_Qty" class="java.math.BigDecimal"/>
+	<field name="t2_Qty" class="java.math.BigDecimal"/>
+	<variable name="T Utilization" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{qtyLent}.divide($F{t_Qty},new MathContext(10))]]></variableExpression>
+	</variable>
+	<variable name="T+1 Utilization" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{qtyLent}.divide( $F{t1_Qty}, new MathContext(10) )]]></variableExpression>
+	</variable>
+	<variable name="T+2 Utilization" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{qtyLent}.divide($F{t2_Qty},new MathContext(10))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="5"/>
+	</title>
+	<pageHeader>
+		<band height="31">
+			<staticText>
+				<reportElement x="0" y="0" width="822" height="20" uuid="638e264b-7570-4548-93f2-93baec6cfbf7"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HK SBL MARGIN OUTSTANDING REPORT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="16" width="50" height="13" uuid="4fa19722-d074-4a15-abd9-0e5260bc2045"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Run On:]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="602" y="16" width="52" height="13" uuid="523a25ca-0de9-427b-85f0-3b96a68fd85b"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm.ss">
+				<reportElement x="654" y="16" width="50" height="13" uuid="175d0150-fdeb-466b-9947-f9b6f1f29a21"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="704" y="16" width="48" height="13" uuid="5fa849c4-a6cb-4031-8cf8-794effc842c7"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="753" y="16" width="40" height="13" uuid="b879ed97-8912-4355-a779-74bc6e52ebde"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="28" width="822" height="1" uuid="a5c77329-6688-4c1a-bbcc-c2724a2357d9"/>
+			</line>
+			<staticText>
+				<reportElement x="70" y="0" width="34" height="26" uuid="6e0945e2-850f-48bb-ac6c-3159d5a2e7cc"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Product Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="13" width="160" height="13" uuid="bceeeb7a-5a31-4a3c-8b44-08d515534d44"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="44" height="26" uuid="e65f4e61-b3d3-4baa-9186-3588b9f66148"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Exchange  Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="13" width="70" height="13" uuid="6eac6af5-73cf-421e-aafd-9a93ba4fd588"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Qty Lent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="13" width="70" height="13" uuid="43be3bfd-ce17-4a45-8939-1966383c4aaa"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="13" width="50" height="13" uuid="c59678c6-7626-4bc2-b1b6-a32c58a15d59"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[% Utilization]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="589" y="13" width="50" height="13" uuid="18d66b10-3e4b-44f5-a2b0-f0258563bff6"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[% Utilization]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="527" y="13" width="50" height="13" uuid="8a8dc727-6c24-43be-bcf5-467fdbd88940"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="713" y="13" width="50" height="13" uuid="78b0abf7-a56e-4db6-9d31-962a4a1daec0"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[% Utilization]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="651" y="13" width="50" height="13" uuid="665b55e2-3dcc-4e0f-a034-ef18d405f2cf"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="568" y="0" width="71" height="13" uuid="b7bd5d27-5964-4e69-8795-d111d05cdff7"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[----T + 1 day----]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="692" y="0" width="71" height="13" uuid="593b6f64-9dd5-45db-85fd-3bd60e39f471"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[----T + 2 day----]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="0" width="50" height="13" uuid="6acf6a84-5cfd-4b99-b561-fc1358697dc1"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[----T day----]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="0" width="58" height="13" uuid="1936d617-4955-4f64-aa3e-ce5b90631eb5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productCode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="135" y="0" width="160" height="13" uuid="6682fbe7-a0ac-456b-b2b4-4e4d715b1ecf"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="67" height="13" uuid="b3d8cb8e-e6de-43c5-8589-49f343d8ceb0"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{exchangeCode}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,###,##0;(###,###,##0)" isBlankWhenNull="true">
+				<reportElement x="300" y="0" width="70" height="13" uuid="f2e0fb61-918e-43dc-b387-942668106457"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtyLent}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,###,##0;(###,###,##0)" isBlankWhenNull="true">
+				<reportElement x="380" y="0" width="70" height="13" uuid="2f1d8acd-9df3-4828-9625-aee5dea88850"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_Qty}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,###,##0;(###,###,##0)" isBlankWhenNull="true">
+				<reportElement x="527" y="0" width="50" height="13" uuid="49376e62-9a24-44c9-a874-98ddb96d17c4"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t1_Qty}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="589" y="0" width="50" height="13" uuid="6f2e8eea-e9d3-493f-b453-ce7a337f4930"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{T+1 Utilization}.multiply( new BigDecimal(100), new MathContext(4) )]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="713" y="0" width="51" height="13" uuid="64a4582d-22b7-413f-a58b-7344e40fb260"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{T+2 Utilization}.multiply( new BigDecimal(100), new MathContext(4) )]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,###,##0;(###,###,##0)" isBlankWhenNull="true">
+				<reportElement x="651" y="0" width="50" height="13" uuid="c48c5f46-22a8-456f-bd27-363a998f690f"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t2_Qty}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#0.00;(#0.00)" isBlankWhenNull="true">
+				<reportElement x="460" y="0" width="50" height="13" uuid="936725b9-4d17-41d1-a11e-036c45266657"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{T Utilization}.multiply( new BigDecimal(100), new MathContext(4) )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="10" width="822" height="16" uuid="362ae4de-c5f7-4756-878e-ef226b84f019"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[*** End of Report ***]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="2" width="822" height="2" uuid="8faa31da-a29c-4bd7-863a-6ccfa09c982f"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="1" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
